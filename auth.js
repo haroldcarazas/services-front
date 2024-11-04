@@ -25,9 +25,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         );
 
         const data = await res.json();
-        console.log(data);
-
-        localStorage.setItem('token', data.token);
 
         if (res.ok && data) {
           return data;
@@ -39,5 +36,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   pages: {
     signIn: '/login',
+  },
+  session: {
+    maxAge: 24 * 60 * 60,
+  },
+  jwt: {
+    maxAge: 24 * 60 * 60,
+  },
+  callbacks: {
+    async jwt({ token, user: data }) {
+      if (data) {
+        token.id = data.id;
+        token.email = data.email;
+        token.name = data.full_name;
+        token.role = data.role;
+        token.accessToken = data.token;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user = {
+        id: token.id,
+        email: token.email,
+        name: token.name,
+        role: token.role,
+      };
+
+      session.accessToken = token.accessToken;
+      return session;
+    },
   },
 });

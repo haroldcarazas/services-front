@@ -8,8 +8,8 @@ function Page() {
     await signIn('credentials', {
       email: e.target.email.value,
       password: e.target.password.value,
-      redirect: false,
-      // redirectTo: '/dashboard',
+      // redirect: false,
+      redirectTo: '/dashboard',
     });
   };
 
