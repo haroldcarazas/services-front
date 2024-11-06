@@ -9,3 +9,11 @@ body {
 .sidebar-btn {
   @apply bg-blue-200 self-center w-[70%] py-2 rounded-md text-center;
 }
+
+.form-label {
+  @apply flex flex-col gap-1;
+}
+
+.form-input {
+  @apply border px-2 py-1 rounded-md;
+}
