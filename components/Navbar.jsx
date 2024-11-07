@@ -1,4 +1,5 @@
 import { signOut } from '@/auth';
+import { redirect } from 'next/navigation';
 
 function Navbar({ fName }) {
   return (
@@ -8,6 +9,7 @@ function Navbar({ fName }) {
         action={async () => {
           'use server';
           await signOut();
+          redirect('/login');
         }}
       >
         <button type='submit' className='bg-red-400 px-2 py-1 rounded-md'>

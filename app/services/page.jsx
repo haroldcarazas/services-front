@@ -7,12 +7,13 @@ import { redirect } from 'next/navigation';
 
 async function Page() {
   const session = await auth();
-  console.log(session);
-  // if (session.user.role.name === 'Student') {
-  //   return redirect('/services/new');
-  // }
 
-  const services = await getServices(session.accessToken);
+  let services = null;
+  try {
+    services = await getServices(session?.accessToken);
+  } catch (error) {
+    redirect('/login');
+  }
 
   return (
     <DashboardLayout>
@@ -23,7 +24,7 @@ async function Page() {
         >
           Registrar servicio
         </Link>
-        <TableServices services={services} />
+        <TableServices role={session.user.role.name} services={services} />
       </section>
     </DashboardLayout>
   );
