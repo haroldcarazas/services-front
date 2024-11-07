@@ -3,9 +3,15 @@ import DashboardLayout from '@/components/DashboardLayout';
 import TableServices from '@/components/TableServices';
 import { getServices } from '@/services/apiServices';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 async function Page() {
   const session = await auth();
+  console.log(session);
+  // if (session.user.role.name === 'Student') {
+  //   return redirect('/services/new');
+  // }
+
   const services = await getServices(session.accessToken);
 
   return (
